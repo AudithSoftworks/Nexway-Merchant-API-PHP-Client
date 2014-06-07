@@ -24,7 +24,7 @@ class create extends \Audith\Providers\Nexway\Data\Request\OrderApi
     /**
      * @var integer
      */
-    public $affiliateId = "";
+    public $affiliateId;
 
     /**
      * @var string

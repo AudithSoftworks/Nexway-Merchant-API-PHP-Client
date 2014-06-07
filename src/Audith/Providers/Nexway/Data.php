@@ -7,53 +7,16 @@ namespace Audith\Providers\Nexway;
 abstract class Data
 {
     private static $mapOfSoapResponseTypesToCustomResponseObjects = array(
-        'getCategoriesCategoryResponseType'       => array('nameSpace' => '\Audith\Providers\Nexway\Data\Response\CatalogApi\getCategories', 'isArray' => true),
-        'getCategoriesSubCategoryResponseType'    => array('nameSpace' => '\Audith\Providers\Nexway\Data\Response\CatalogApi\getCategories\subcategory', 'isArray' => true),
-        'getOperatingSystemsOsResponseType'       => array('nameSpace' => '\Audith\Providers\Nexway\Data\Response\CatalogApi\getOperatingSystems', 'isArray' => true),
-        'getStockStatusproductStatusResponseType' => array('nameSpace' => '\Audith\Providers\Nexway\Data\Response\OrderApi\getStockStatus\productStatus', 'isArray' => true)
+        'getCategoriesCategoryResponseType'       => array('nameSpace' => '\Audith\Providers\Nexway\Data\Response\CatalogApi\getCategories'),
+        'getCategoriesSubCategoryResponseType'    => array('nameSpace' => '\Audith\Providers\Nexway\Data\Response\CatalogApi\getCategories\subcategory'),
+        'getOperatingSystemsOsResponseType'       => array('nameSpace' => '\Audith\Providers\Nexway\Data\Response\CatalogApi\getOperatingSystems'),
+        'getStockStatusproductStatusResponseType' => array('nameSpace' => '\Audith\Providers\Nexway\Data\Response\OrderApi\getStockStatus\productStatus'),
+        'createOrderLineResponseType'             => array('nameSpace' => '\Audith\Providers\Nexway\Data\Response\OrderApi\create\orderLines'),
+        'createLineItemResponseType'              => array('nameSpace' => '\Audith\Providers\Nexway\Data\Response\OrderApi\create\orderLines\lineItems'),
+        'createSerialResponseType'                => array('nameSpace' => '\Audith\Providers\Nexway\Data\Response\OrderApi\create\orderLines\lineItems\serials'),
+        'createFileResponseType'                  => array('nameSpace' => '\Audith\Providers\Nexway\Data\Response\OrderApi\create\orderLines\files'),
+        'createDownloadManagerResponseType'       => array('nameSpace' => '\Audith\Providers\Nexway\Data\Response\OrderApi\create\downloadManager')
     );
-
-
-    public function __get($name)
-    {
-        switch ($name) {
-            case 'className':
-                $_className = array_slice(explode('\\', get_called_class()), -1, 1);
-
-                return $_className[0];
-                break;
-            default:
-                return null;
-        }
-    }
-
-
-    public function __call($name, $arguments)
-    {
-        switch ($name) {
-            case 'getClassName':
-                $_className = array_slice(explode('\\', get_called_class()), -1, 1);
-
-                return $_className[0];
-                break;
-            default:
-                return null;
-        }
-    }
-
-
-    public static function __callStatic($name, $arguments)
-    {
-        switch ($name) {
-            case 'getClassName':
-                $_className = array_slice(explode('\\', get_called_class()), -1, 1);
-
-                return $_className[0];
-                break;
-            default:
-                return null;
-        }
-    }
 
 
     /**
@@ -143,41 +106,6 @@ abstract class Data
         }
 
         return $destinationObject;
-    }
-
-
-    /**
-     * @param Data $data
-     * @param bool $throwExceptionOnFailure
-     *
-     * @return bool
-     * @throws Exception\InvalidDataException
-     */
-    public static function validate(self $data, $throwExceptionOnFailure = true)
-    {
-        try {
-            # Instance check
-            if (!($data instanceof self)) {
-                if ($throwExceptionOnFailure) {
-                    throw new Exception\InvalidDataException("Data isn't an instance of " . self::getClassName() . "!");
-                } else {
-                    return false;
-                }
-            }
-
-            # Emptiness check
-            if (Data\Validator::isObjectFullySet($data) === false) {
-                if ($throwExceptionOnFailure) {
-                    throw new Exception\InvalidDataException("Empty or missing parameter for " . self::getClassName() . " object!");
-                } else {
-                    return false;
-                }
-            }
-        } catch (Exception\InvalidDataException $e) {
-            throw $e;
-        }
-
-        return true;
     }
 
 

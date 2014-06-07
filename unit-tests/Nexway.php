@@ -145,7 +145,7 @@ class NexwayTest extends PHPUnit_Framework_TestCase
         $create->customer = $_customer;
 
         //--------------------------------------------------------------------------------------------
-        // Create "create::orderLine" fields and populate it with data coming through @dataProvider
+        // Create "create::orderLines" fields and populate it with data coming through @dataProvider
         //--------------------------------------------------------------------------------------------
 
         foreach ($data as $_orderLineItem) {
@@ -159,9 +159,14 @@ class NexwayTest extends PHPUnit_Framework_TestCase
         }
 
         $requestStruct = new \Audith\Providers\Nexway\Data\Request($create);
-
         $nexwayObject = new \Audith\Providers\Nexway();
+        $responseObject = $nexwayObject->run($requestStruct);
 
-        return $nexwayObject->run($requestStruct);
+        /**
+         * @var \Audith\Providers\Nexway\Data\Response\OrderApi\create $responseObject
+         */
+        $this->assertEquals(0, $responseObject->responseCode);
+
+        return $responseObject;
     }
 }

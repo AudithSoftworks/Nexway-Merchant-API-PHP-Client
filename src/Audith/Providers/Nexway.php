@@ -15,12 +15,6 @@ class Nexway
      */
     public function run(Nexway\Data\Request $data)
     {
-        //-------------------------------------------------------------------------------------------------------
-        // Validate Request data integrity - if something is wrong, validation process with throw an exception
-        //-------------------------------------------------------------------------------------------------------
-
-        $this->validate($data);
-
         //---------------------
         // Send HTTP request
         //---------------------
@@ -42,16 +36,10 @@ class Nexway
         $responseObject = new $_responseMethodName();
 
         //--------------------------------------------------------
-        // Map fetched <Value> DOMNodeList into Response object
+        // Map response package into our custom Response object
         //--------------------------------------------------------
 
         $responseObject = $responseObject->mapNexwaySoapResponseObjectToOurCustomResponseObject($responsePackage->out);
-
-        //-----------------------------
-        // Validate Response object
-        //-----------------------------
-
-        $this->validate($responseObject);
 
         return $responseObject;
     }
