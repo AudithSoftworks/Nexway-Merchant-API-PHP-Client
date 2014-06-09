@@ -29,7 +29,7 @@ class NexwayTest extends PHPUnit_Framework_TestCase
     public function test_Provider_Nexway_Data_Request_CatalogApi_getCategories()
     {
         $getCategoriesRequest                             = new \Audith\Providers\Nexway\Data\Request\CatalogApi\getCategories();
-        $getCategoriesRequest->productDescriptionLanguage = "EN";
+        $getCategoriesRequest->productDescriptionLanguage = "EN"; // Not required
 
         $requestStruct = new \Audith\Providers\Nexway\Data\Request($getCategoriesRequest);
         $nexwayObject  = new \Audith\Providers\Nexway();
@@ -141,7 +141,7 @@ class NexwayTest extends PHPUnit_Framework_TestCase
         $create                     = new \Audith\Providers\Nexway\Data\Request\OrderApi\create();
         $create->partnerOrderNumber = (string) rand(100000, 10000000);
         $create->marketingProgramId = "";
-        $create->currency           = "EUR";
+        $create->currency           = "TRY";
 
         # Formatting "orderData" in ISO 8601 date-format (XSD dateTime format)
         $_config           = \Audith\Providers\Nexway\Data::getConfig("Nexway");
@@ -215,7 +215,7 @@ class NexwayTest extends PHPUnit_Framework_TestCase
         $_invalidOrderData                     = new \stdClass();
         $_invalidOrderData->responseCode       = 0;
         $_invalidOrderData->responseMessage    = 'OK';
-        $_invalidOrderData->partnerOrderNumber = '3333333333333';
+        $_invalidOrderData->partnerOrderNumber = '-1';
         $_invalidOrderData->_amIFake           = true;
 
         $_createdOrders   = self::$createdOrders;
@@ -230,6 +230,40 @@ class NexwayTest extends PHPUnit_Framework_TestCase
             $getDownloadInfo->partnerOrderNumber = $_order->partnerOrderNumber;
 
             $requestStruct = new \Audith\Providers\Nexway\Data\Request($getDownloadInfo);
+            $nexwayObject  = new \Audith\Providers\Nexway();
+            $returnObject  = $nexwayObject->run($requestStruct);
+
+            /**
+             * @var \Audith\Providers\Nexway\Data\Response\OrderApi\create $returnObject
+             */
+            $this->assertEquals(0, $returnObject->responseCode);
+        }
+    }
+
+
+    public function test_Provider_Nexway_Data_Request_OrderApi_updateDownloadTime()
+    {
+        $this->assertNotEmpty(self::$createdOrders);
+
+        $_invalidOrderData                     = new \stdClass();
+        $_invalidOrderData->responseCode       = 0;
+        $_invalidOrderData->responseMessage    = 'OK';
+        $_invalidOrderData->partnerOrderNumber = '-1';
+        $_invalidOrderData->_amIFake           = true;
+
+        $_createdOrders   = self::$createdOrders;
+        $_createdOrders[] = $_invalidOrderData;
+
+        foreach ($_createdOrders as $_order) {
+            if (isset($_order->_amIFake) and $_order->_amIFake === true) {
+                $this->setExpectedException('Audith\\Providers\\Nexway\\Exception\\OrderNotFoundException');
+            }
+
+            $updateDownloadTime                     = new \Audith\Providers\Nexway\Data\Request\OrderApi\updateDownloadTime();
+            $updateDownloadTime->partnerOrderNumber = $_order->partnerOrderNumber;
+            $updateDownloadTime->value              = 'P7D';
+
+            $requestStruct = new \Audith\Providers\Nexway\Data\Request($updateDownloadTime);
             $nexwayObject  = new \Audith\Providers\Nexway();
             $returnObject  = $nexwayObject->run($requestStruct);
 
