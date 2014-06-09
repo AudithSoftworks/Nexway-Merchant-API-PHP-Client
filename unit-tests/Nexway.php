@@ -5,10 +5,22 @@ require_once dirname(dirname(__FILE__)) . "/vendor/autoload.php";
 
 class NexwayTest extends PHPUnit_Framework_TestCase
 {
+    protected static $createdOrders;
+
+    protected static $cancelledOrders;
+
+
+    public static function setUpBeforeClass()
+    {
+        self::$createdOrders   = array();
+        self::$cancelledOrders = array();
+    }
+
+
     public function test_Provider_Data_getConfig_forNexway()
     {
         $config = \Audith\Providers\Nexway\Data::getConfig("Nexway");
-        $this->assertNotEmpty($config['service']);
+        $this->assertNotEmpty($config['service'], "PASSED : Configuration fetched!");
 
         return $config;
     }
@@ -20,22 +32,31 @@ class NexwayTest extends PHPUnit_Framework_TestCase
         $getCategoriesRequest->productDescriptionLanguage = "EN";
 
         $requestStruct = new \Audith\Providers\Nexway\Data\Request($getCategoriesRequest);
+        $nexwayObject  = new \Audith\Providers\Nexway();
+        $returnObject  = $nexwayObject->run($requestStruct);
 
-        $nexwayObject = new \Audith\Providers\Nexway();
+        /**
+         * @var \Audith\Providers\Nexway\Data\Response\OrderApi\create $returnObject
+         */
+        $this->assertEquals(0, $returnObject->responseCode);
 
-        return $nexwayObject->run($requestStruct);
+        return $returnObject;
     }
 
 
     public function test_Provider_Nexway_Data_Request_CatalogApi_getOperatingSystems()
     {
         $getOperatingSystems = new \Audith\Providers\Nexway\Data\Request\CatalogApi\getOperatingSystems();
+        $requestStruct       = new \Audith\Providers\Nexway\Data\Request($getOperatingSystems);
+        $nexwayObject        = new \Audith\Providers\Nexway();
+        $returnObject        = $nexwayObject->run($requestStruct);
 
-        $requestStruct = new \Audith\Providers\Nexway\Data\Request($getOperatingSystems);
+        /**
+         * @var \Audith\Providers\Nexway\Data\Response\OrderApi\create $returnObject
+         */
+        $this->assertEquals(0, $returnObject->responseCode);
 
-        $nexwayObject = new \Audith\Providers\Nexway();
-
-        return $nexwayObject->run($requestStruct);
+        return $returnObject;
     }
 
 
@@ -58,10 +79,15 @@ class NexwayTest extends PHPUnit_Framework_TestCase
         $getStockStatus->productRef = $data;
 
         $requestStruct = new \Audith\Providers\Nexway\Data\Request($getStockStatus);
+        $nexwayObject  = new \Audith\Providers\Nexway();
+        $returnObject  = $nexwayObject->run($requestStruct);
 
-        $nexwayObject = new \Audith\Providers\Nexway();
+        /**
+         * @var \Audith\Providers\Nexway\Data\Response\OrderApi\create $responseObject
+         */
+        $this->assertNotEmpty($returnObject);
 
-        return $nexwayObject->run($requestStruct);
+        return $returnObject;
     }
 
 
@@ -71,29 +97,33 @@ class NexwayTest extends PHPUnit_Framework_TestCase
             // Valid productRef
             array(
                 array(
-                    array('vatRate' => 0, 'amountTotal' => "", 'productRef' => 4626, 'amountDutyFree' => "", 'quantity' => 3)
-                )
+                    array('vatRate' => 0, 'amountTotal' => null, 'productRef' => 4626, 'amountDutyFree' => null, 'quantity' => 3)
+                ),
+                $_exceptionExpected = false
             ),
             // invalid productRef
             array(
                 array(
-                    array('vatRate' => 0, 'amountTotal' => "", 'productRef' => 45456626, 'amountDutyFree' => "", 'quantity' => 3),
-                )
-            ),
-            // All valid productRefs
-            array(
-                array(
-                    array('vatRate' => 8, 'amountTotal' => "", 'productRef' => 4127, 'amountDutyFree' => "", 'quantity' => 2),
-                    array('vatRate' => 18, 'amountTotal' => "", 'productRef' => 4653, 'amountDutyFree' => "", 'quantity' => 1),
-
-                )
+                    array('vatRate' => 0, 'amountTotal' => null, 'productRef' => -1, 'amountDutyFree' => null, 'quantity' => 3)
+                ),
+                $_exceptionExpected = true
             ),
             // Second one has invalid productRef
             array(
                 array(
-                    array('vatRate' => 8, 'amountTotal' => "", 'productRef' => 4758, 'amountDutyFree' => "", 'quantity' => 2),
-                    array('vatRate' => 18, 'amountTotal' => "", 'productRef' => 4622525653, 'amountDutyFree' => "", 'quantity' => 1)
-                )
+                    array('vatRate' => 8, 'amountTotal' => null, 'productRef' => 4758, 'amountDutyFree' => null, 'quantity' => 2),
+                    array('vatRate' => 18, 'amountTotal' => null, 'productRef' => -1, 'amountDutyFree' => null, 'quantity' => 1)
+                ),
+                $_exceptionExpected = true
+            ),
+            // All valid productRefs
+            array(
+                array(
+                    array('vatRate' => 8, 'amountTotal' => null, 'productRef' => 4127, 'amountDutyFree' => null, 'quantity' => 2),
+                    array('vatRate' => 18, 'amountTotal' => null, 'productRef' => 4653, 'amountDutyFree' => null, 'quantity' => 1),
+
+                ),
+                $_exceptionExpected = false
             )
         );
     }
@@ -102,7 +132,7 @@ class NexwayTest extends PHPUnit_Framework_TestCase
     /**
      * @dataProvider data_Provider_Nexway_Data_Request_OrderApi_create
      */
-    public function test_Provider_Nexway_Data_Request_OrderApi_create($data)
+    public function test_Provider_Nexway_Data_Request_OrderApi_create($data, $_exceptionExpected = false)
     {
         //------------------------------------------------------------
         // Create "create" object and populate it's simple members
@@ -159,14 +189,56 @@ class NexwayTest extends PHPUnit_Framework_TestCase
         }
 
         $requestStruct = new \Audith\Providers\Nexway\Data\Request($create);
-        $nexwayObject = new \Audith\Providers\Nexway();
-        $responseObject = $nexwayObject->run($requestStruct);
+        $nexwayObject  = new \Audith\Providers\Nexway();
+        if ($_exceptionExpected === true) {
+            $this->setExpectedException('Audith\\Providers\\Nexway\\Exception\\ProductRefIsInvalidException');
+        }
+        $returnObject = $nexwayObject->run($requestStruct);
 
         /**
-         * @var \Audith\Providers\Nexway\Data\Response\OrderApi\create $responseObject
+         * @var \Audith\Providers\Nexway\Data\Response\OrderApi\create $returnObject
          */
-        $this->assertEquals(0, $responseObject->responseCode);
+        $this->assertEquals(0, $returnObject->responseCode);
 
-        return $responseObject;
+        if ($returnObject->responseCode == 0) {
+            self::$createdOrders[] = $returnObject;
+        }
+
+        return $returnObject;
+    }
+
+
+    public function test_Provider_Nexway_Data_Request_OrderApi_cancel()
+    {
+        $this->assertNotEmpty(self::$createdOrders);
+
+        $_invalidOrderData                     = new \stdClass();
+        $_invalidOrderData->responseCode       = 0;
+        $_invalidOrderData->responseMessage    = 'OK';
+        $_invalidOrderData->partnerOrderNumber = '3333333333333';
+        $_invalidOrderData->orderNumber        = 22;
+        $_invalidOrderData->_amIFake           = true;
+
+        $_createdOrders   = self::$createdOrders;
+        $_createdOrders[] = $_invalidOrderData;
+
+        foreach ($_createdOrders as $_order) {
+            if (isset($_order->_amIFake) and $_order->_amIFake === true) {
+                $this->setExpectedException('Audith\\Providers\\Nexway\\Exception\\OrderNotFoundException');
+            }
+
+            $cancel                     = new \Audith\Providers\Nexway\Data\Request\OrderApi\cancel();
+            $cancel->partnerOrderNumber = $_order->partnerOrderNumber;
+            $cancel->reasonCode         = \Audith\Providers\Nexway\Data\Request\OrderApi\cancel::REASONCODE__ORDER_CANCELLED;
+
+            $requestStruct = new \Audith\Providers\Nexway\Data\Request($cancel);
+            $nexwayObject  = new \Audith\Providers\Nexway();
+            $returnObject  = $nexwayObject->run($requestStruct);
+
+            /**
+             * @var \Audith\Providers\Nexway\Data\Response\OrderApi\create $returnObject
+             */
+            $this->assertEquals(0, $returnObject->responseCode);
+        }
     }
 }

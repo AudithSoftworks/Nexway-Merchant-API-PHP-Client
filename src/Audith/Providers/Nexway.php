@@ -35,6 +35,14 @@ class Nexway
          */
         $responseObject = new $_responseMethodName();
 
+        //----------------------
+        // Exception handling
+        //----------------------
+
+        if (isset($responsePackage->out->responseCode) and $responsePackage->out->responseCode != 0) {
+            $this->exceptionHandler($responsePackage->out->responseMessage, $responsePackage->out->responseCode, $responseObject);
+        }
+
         //--------------------------------------------------------
         // Map response package into our custom Response object
         //--------------------------------------------------------
@@ -45,16 +53,21 @@ class Nexway
     }
 
 
-    /**
-     * @param Nexway\Data $data
-     *
-     * @return bool
-     */
-    public function validate(Nexway\Data $data)
+    private function exceptionHandler($msg, $code, $responseObject)
     {
-        $dataValidator = new Nexway\Data\Validator();
+        $_globalExceptionMappings = \Audith\Providers\Nexway\Exception::$exceptionCodeMapping;
 
-        return $dataValidator->validate($data);
+        $_responseObjectNamespace = '\\' . get_class($responseObject);
+        $_localExceptionMappings  = $_responseObjectNamespace::$exceptionCodeMapping;
+
+        $_allExceptionMappings = $_globalExceptionMappings + $_localExceptionMappings;
+
+        if (isset($_allExceptionMappings[$code])) {
+            $_exceptionClassNamespace = '\\Audith\\Providers\\Nexway\\Exception\\' . $_allExceptionMappings[$code];
+            throw new $_exceptionClassNamespace($msg, $code);
+        } else {
+            throw new \Exception("[API-Error] " . $msg, $code);
+        }
     }
 
 

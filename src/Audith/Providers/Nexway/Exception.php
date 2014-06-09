@@ -7,6 +7,12 @@ namespace Audith\Providers\Nexway;
 
 class Exception extends \Exception
 {
+    public static $exceptionCodeMapping = array(
+        70   => "SecretIsMissingException",
+        71   => "SecretNotValidException"
+    );
+
+
     public function __construct($msg, $code = null)
     {
         $msg = "Provider/Nexway: " . $msg;
