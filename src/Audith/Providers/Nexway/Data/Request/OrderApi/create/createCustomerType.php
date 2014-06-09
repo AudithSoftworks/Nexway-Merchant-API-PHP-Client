@@ -19,6 +19,8 @@ class createCustomerType extends \Audith\Providers\Nexway\Data\Request\OrderApi
     public $email;
 
     /**
+     * The language must respect the ISO 639_ISO 3166 format (ex :fr_CA (french_CANADA))
+     *
      * @var string
      */
     public $language = "en_XE";
@@ -40,6 +42,7 @@ class createCustomerType extends \Audith\Providers\Nexway\Data\Request\OrderApi
 
     /**
      * @var string
+     * @usage ([A-Fa-f0-9]{1,4}:){7}[A-Fa-f0-9]{1,4}
      */
     public $IP_V = "";
 }

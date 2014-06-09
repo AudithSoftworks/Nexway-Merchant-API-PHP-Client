@@ -17,6 +17,8 @@ class create extends \Audith\Providers\Nexway\Data\Request\OrderApi
     public $orderDate;
 
     /**
+     * The currency used for the transaction, must respect the ISO 4217 format (ex : EUR)
+     *
      * @var string
      */
     public $currency;

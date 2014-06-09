@@ -6,6 +6,12 @@ namespace Audith\Providers\Nexway\Data\Response\OrderApi\getStockStatus;
  */
 class productStatus extends \Audith\Providers\Nexway\Data
 {
+    const STATUS__ENOUGH_STOCK = 100;
+
+    const STATUS__ALMOST_OUT_OF_STOCK = 200;
+
+    const STATUS__OUT_OF_STOCK = 300;
+
     /**
      * @var integer
      */

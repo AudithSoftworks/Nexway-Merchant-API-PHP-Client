@@ -9,6 +9,16 @@ use Audith\Providers\Nexway\Data\Request\OrderApi;
 class getStockStatus extends \Audith\Providers\Nexway\Data\Response\OrderApi
 {
     /**
+     * @var array
+     * @see http://wsdocs.nexway.com/APIGuide/index.html?url=responsecodetype5.html
+     */
+    public static $exceptionCodeMapping = array(
+        100  => "ProductRefIsMissingException",
+        101  => "ProductRefIsInvalidException",
+        1010 => "ProductReferenceDoesntExistException"
+    );
+
+    /**
      * @var integer
      */
     public $productStatus;

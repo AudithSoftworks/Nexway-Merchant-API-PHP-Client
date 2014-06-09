@@ -47,12 +47,19 @@ class createLocationType extends \Audith\Providers\Nexway\Data\Request\OrderApi
     public $city;
 
     /**
+     * Customer Province: Mandatory if country is US, CA, BR or AU (USA, Canada, Brazil or Australia)
+     *
      * @var string
+     * @see http://wsdocs.nexway.com/APIGuide/index.html?url=province.html
      */
     public $province = "";
 
     /**
+     * ISO 3166-1 alpha-2 country code.
+     *
      * @var string
+     * @see http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2
+     * @see http://wsdocs.nexway.com/APIGuide/index.html?url=countrycode.html
      */
     public $country;
 
