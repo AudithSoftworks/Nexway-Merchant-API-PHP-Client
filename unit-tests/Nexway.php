@@ -208,6 +208,39 @@ class NexwayTest extends PHPUnit_Framework_TestCase
     }
 
 
+    public function test_Provider_Nexway_Data_Request_OrderApi_getDownloadInfo()
+    {
+        $this->assertNotEmpty(self::$createdOrders);
+
+        $_invalidOrderData                     = new \stdClass();
+        $_invalidOrderData->responseCode       = 0;
+        $_invalidOrderData->responseMessage    = 'OK';
+        $_invalidOrderData->partnerOrderNumber = '3333333333333';
+        $_invalidOrderData->_amIFake           = true;
+
+        $_createdOrders   = self::$createdOrders;
+        $_createdOrders[] = $_invalidOrderData;
+
+        foreach ($_createdOrders as $_order) {
+            if (isset($_order->_amIFake) and $_order->_amIFake === true) {
+                $this->setExpectedException('Audith\\Providers\\Nexway\\Exception\\OrderNotFoundException');
+            }
+
+            $getDownloadInfo                     = new \Audith\Providers\Nexway\Data\Request\OrderApi\getDownloadInfo();
+            $getDownloadInfo->partnerOrderNumber = $_order->partnerOrderNumber;
+
+            $requestStruct = new \Audith\Providers\Nexway\Data\Request($getDownloadInfo);
+            $nexwayObject  = new \Audith\Providers\Nexway();
+            $returnObject  = $nexwayObject->run($requestStruct);
+
+            /**
+             * @var \Audith\Providers\Nexway\Data\Response\OrderApi\create $returnObject
+             */
+            $this->assertEquals(0, $returnObject->responseCode);
+        }
+    }
+
+
     public function test_Provider_Nexway_Data_Request_OrderApi_cancel()
     {
         $this->assertNotEmpty(self::$createdOrders);

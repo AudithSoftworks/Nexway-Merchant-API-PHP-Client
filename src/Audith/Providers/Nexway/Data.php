@@ -7,15 +7,17 @@ namespace Audith\Providers\Nexway;
 abstract class Data
 {
     private static $mapOfSoapResponseTypesToCustomResponseObjects = array(
-        'getCategoriesCategoryResponseType'       => array('nameSpace' => '\Audith\Providers\Nexway\Data\Response\CatalogApi\getCategories'),
-        'getCategoriesSubCategoryResponseType'    => array('nameSpace' => '\Audith\Providers\Nexway\Data\Response\CatalogApi\getCategories\subcategory'),
-        'getOperatingSystemsOsResponseType'       => array('nameSpace' => '\Audith\Providers\Nexway\Data\Response\CatalogApi\getOperatingSystems'),
-        'getStockStatusproductStatusResponseType' => array('nameSpace' => '\Audith\Providers\Nexway\Data\Response\OrderApi\getStockStatus\productStatus'),
-        'createOrderLineResponseType'             => array('nameSpace' => '\Audith\Providers\Nexway\Data\Response\OrderApi\create\orderLines'),
-        'createLineItemResponseType'              => array('nameSpace' => '\Audith\Providers\Nexway\Data\Response\OrderApi\create\orderLines\lineItems'),
-        'createSerialResponseType'                => array('nameSpace' => '\Audith\Providers\Nexway\Data\Response\OrderApi\create\orderLines\lineItems\serials'),
-        'createFileResponseType'                  => array('nameSpace' => '\Audith\Providers\Nexway\Data\Response\OrderApi\create\orderLines\files'),
-        'createDownloadManagerResponseType'       => array('nameSpace' => '\Audith\Providers\Nexway\Data\Response\OrderApi\create\downloadManager')
+        'getCategoriesCategoryResponseType'            => array('nameSpace' => '\Audith\Providers\Nexway\Data\Response\CatalogApi\getCategories'),
+        'getCategoriesSubCategoryResponseType'         => array('nameSpace' => '\Audith\Providers\Nexway\Data\Response\CatalogApi\getCategories\subcategory'),
+        'getOperatingSystemsOsResponseType'            => array('nameSpace' => '\Audith\Providers\Nexway\Data\Response\CatalogApi\getOperatingSystems'),
+        'getStockStatusproductStatusResponseType'      => array('nameSpace' => '\Audith\Providers\Nexway\Data\Response\OrderApi\getStockStatus\productStatus'),
+        'createOrderLineResponseType'                  => array('nameSpace' => '\Audith\Providers\Nexway\Data\Response\OrderApi\create\orderLines'),
+        'createLineItemResponseType'                   => array('nameSpace' => '\Audith\Providers\Nexway\Data\Response\OrderApi\create\orderLines\lineItems'),
+        'createSerialResponseType'                     => array('nameSpace' => '\Audith\Providers\Nexway\Data\Response\OrderApi\create\orderLines\lineItems\serials'),
+        'createFileResponseType'                       => array('nameSpace' => '\Audith\Providers\Nexway\Data\Response\OrderApi\create\orderLines\files'),
+        'createDownloadManagerResponseType'            => array('nameSpace' => '\Audith\Providers\Nexway\Data\Response\OrderApi\create\downloadManager'),
+        'getDownloadInfoOrderLineDownloadResponseType' => array('nameSpace' => '\Audith\Providers\Nexway\Data\Response\OrderApi\getDownloadInfo\orderLines'),
+        'getDownloadInfoFileDownloadResponseType'      => array('nameSpace' => '\Audith\Providers\Nexway\Data\Response\OrderApi\getDownloadInfo\orderLines\files'),
     );
 
 
