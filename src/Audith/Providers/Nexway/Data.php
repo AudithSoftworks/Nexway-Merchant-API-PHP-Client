@@ -16,6 +16,11 @@ abstract class Data
         'createSerialResponseType'                     => array('nameSpace' => '\Audith\Providers\Nexway\Data\Response\OrderApi\create\orderLines\lineItems\serials'),
         'createFileResponseType'                       => array('nameSpace' => '\Audith\Providers\Nexway\Data\Response\OrderApi\create\orderLines\files'),
         'createDownloadManagerResponseType'            => array('nameSpace' => '\Audith\Providers\Nexway\Data\Response\OrderApi\create\downloadManager'),
+        'getDataOrderLineResponseType'                 => array('nameSpace' => '\Audith\Providers\Nexway\Data\Response\OrderApi\getData\orderLines'),
+        'getDataLineItemResponseType'                  => array('nameSpace' => '\Audith\Providers\Nexway\Data\Response\OrderApi\getData\orderLines\lineItems'),
+        'getDataSerialResponseType'                    => array('nameSpace' => '\Audith\Providers\Nexway\Data\Response\OrderApi\getData\orderLines\lineItems\serials'),
+        'getDataFileResponseType'                      => array('nameSpace' => '\Audith\Providers\Nexway\Data\Response\OrderApi\getData\orderLines\files'),
+        'getDataDownloadManagerResponseType'           => array('nameSpace' => '\Audith\Providers\Nexway\Data\Response\OrderApi\getData\downloadManager'),
         'getDownloadInfoOrderLineDownloadResponseType' => array('nameSpace' => '\Audith\Providers\Nexway\Data\Response\OrderApi\getDownloadInfo\orderLines'),
         'getDownloadInfoFileDownloadResponseType'      => array('nameSpace' => '\Audith\Providers\Nexway\Data\Response\OrderApi\getDownloadInfo\orderLines\files'),
     );

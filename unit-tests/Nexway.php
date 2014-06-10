@@ -199,6 +199,12 @@ class NexwayTest extends PHPUnit_Framework_TestCase
          * @var \Audith\Providers\Nexway\Data\Response\OrderApi\create $returnObject
          */
         $this->assertEquals(0, $returnObject->responseCode);
+        $this->assertNotNull($returnObject->orderNumber);
+        $this->assertNotEquals(0, $returnObject->orderNumber);
+        $this->assertNotNull($returnObject->partnerOrderNumber);
+        $this->assertNotEquals("", $returnObject->partnerOrderNumber);
+        $this->assertNotNull($returnObject->orderLines);
+        $this->assertNotEmpty($returnObject->orderLines);
 
         if ($returnObject->responseCode == 0) {
             self::$createdOrders[] = $returnObject;
@@ -271,6 +277,45 @@ class NexwayTest extends PHPUnit_Framework_TestCase
              * @var \Audith\Providers\Nexway\Data\Response\OrderApi\create $returnObject
              */
             $this->assertEquals(0, $returnObject->responseCode);
+        }
+    }
+
+
+    public function test_Provider_Nexway_Data_Request_OrderApi_getData()
+    {
+        $this->assertNotEmpty(self::$createdOrders);
+
+        $_invalidOrderData                     = new \stdClass();
+        $_invalidOrderData->responseCode       = 0;
+        $_invalidOrderData->responseMessage    = 'OK';
+        $_invalidOrderData->partnerOrderNumber = '3333333333333';
+        $_invalidOrderData->_amIFake           = true;
+
+        $_createdOrders   = self::$createdOrders;
+        $_createdOrders[] = $_invalidOrderData;
+
+        foreach ($_createdOrders as $_order) {
+            if (isset($_order->_amIFake) and $_order->_amIFake === true) {
+                $this->setExpectedException('Audith\\Providers\\Nexway\\Exception\\OrderNotFoundException');
+            }
+
+            $getData                     = new \Audith\Providers\Nexway\Data\Request\OrderApi\getData();
+            $getData->partnerOrderNumber = $_order->partnerOrderNumber;
+
+            $requestStruct = new \Audith\Providers\Nexway\Data\Request($getData);
+            $nexwayObject  = new \Audith\Providers\Nexway();
+            $returnObject  = $nexwayObject->run($requestStruct);
+
+            /**
+             * @var \Audith\Providers\Nexway\Data\Response\OrderApi\create $returnObject
+             */
+            $this->assertEquals(0, $returnObject->responseCode);
+            $this->assertNotNull($returnObject->orderNumber);
+            $this->assertNotEquals(0, $returnObject->orderNumber);
+            $this->assertNotNull($returnObject->partnerOrderNumber);
+            $this->assertNotEquals("", $returnObject->partnerOrderNumber);
+            $this->assertNotNull($returnObject->orderLines);
+            $this->assertNotEmpty($returnObject->orderLines);
         }
     }
 
