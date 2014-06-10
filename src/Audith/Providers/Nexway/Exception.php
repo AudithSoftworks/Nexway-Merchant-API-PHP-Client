@@ -15,7 +15,6 @@ class Exception extends \Exception
 
     public function __construct($msg, $code = null)
     {
-        $msg = "Provider/Nexway: " . $msg;
         parent::__construct($msg, $code);
     }
 }

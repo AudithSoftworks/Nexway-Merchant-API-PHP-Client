@@ -17,7 +17,7 @@ class getStockStatus extends \Audith\Providers\Nexway\Data\Response\OrderApi
     );
 
     /**
-     * @var integer
+     * @var getStockStatus\productStatus[]
      */
     public $productStatus;
 

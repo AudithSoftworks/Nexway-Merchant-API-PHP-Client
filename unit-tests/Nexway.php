@@ -5,15 +5,21 @@ require_once dirname(dirname(__FILE__)) . "/vendor/autoload.php";
 
 class NexwayTest extends PHPUnit_Framework_TestCase
 {
+    protected static $stockStatus;
+
     protected static $createdOrders;
 
     protected static $cancelledOrders;
 
+    protected static $crossUpSales;
+
 
     public static function setUpBeforeClass()
     {
+        self::$stockStatus     = array();
         self::$createdOrders   = array();
         self::$cancelledOrders = array();
+        self::$crossUpSales    = array();
     }
 
 
@@ -64,8 +70,8 @@ class NexwayTest extends PHPUnit_Framework_TestCase
     {
         return array(
             array(array(4626, 4649)),
-            array(array(412721212121)),
-            array(array(4127))
+            array(array(4127)),
+            array(array(412721212121))
         );
     }
 
@@ -83,11 +89,54 @@ class NexwayTest extends PHPUnit_Framework_TestCase
         $returnObject  = $nexwayObject->run($requestStruct);
 
         /**
-         * @var \Audith\Providers\Nexway\Data\Response\OrderApi\create $responseObject
+         * @var \Audith\Providers\Nexway\Data\Response\OrderApi\getStockStatus $returnObject
          */
         $this->assertNotEmpty($returnObject);
 
-        return $returnObject;
+        self::$stockStatus[] = $returnObject->productStatus;
+    }
+
+
+    public function test_Provider_Nexway_Data_Request_OrderApi_getCrossUpSell()
+    {
+        $this->assertNotEmpty(self::$stockStatus);
+
+        foreach (self::$stockStatus as $_crossUpSellBasket) {
+            //------------------------------------------------------------
+            // Create "create" object and populate it's simple members
+            //------------------------------------------------------------
+
+            $getCrossUpSell = new \Audith\Providers\Nexway\Data\Request\OrderApi\getCrossUpSell();
+
+            //--------------------------------------------------------------------------------------------
+            // Create "create::orderLines" fields and populate it with data coming through @dataProvider
+            //--------------------------------------------------------------------------------------------
+
+            foreach ($_crossUpSellBasket as $_productStatus) {
+                if ($_productStatus->responseCode != 0) {
+                    $this->setExpectedException('Audith\\Providers\\Nexway\\Exception\\ProductRefIsInvalidException');
+                }
+                $_products                  = new \Audith\Providers\Nexway\Data\Request\OrderApi\getCrossUpSell\getCrossUpSellProductType();
+                $_products->productRef      = $_productStatus->productRef;
+                $_products->quantity        = rand(1, 5);
+                $getCrossUpSell->products[] = $_products;
+            }
+
+            $requestStruct = new \Audith\Providers\Nexway\Data\Request($getCrossUpSell);
+            $nexwayObject  = new \Audith\Providers\Nexway();
+            $returnObject  = $nexwayObject->run($requestStruct);
+
+            /**
+             * @var \Audith\Providers\Nexway\Data\Response\OrderApi\getCrossUpSell $returnObject
+             */
+            $this->assertEquals(0, $returnObject->responseCode);
+            // $this->assertNotNull($returnObject->productsReturn); @todo
+            // $this->assertNotEmpty($returnObject->productsReturn); @todo
+
+            if ($returnObject->responseCode == 0) {
+                self::$crossUpSales[] = $returnObject;
+            }
+        }
     }
 
 
@@ -209,8 +258,6 @@ class NexwayTest extends PHPUnit_Framework_TestCase
         if ($returnObject->responseCode == 0) {
             self::$createdOrders[] = $returnObject;
         }
-
-        return $returnObject;
     }
 
 
@@ -240,7 +287,7 @@ class NexwayTest extends PHPUnit_Framework_TestCase
             $returnObject  = $nexwayObject->run($requestStruct);
 
             /**
-             * @var \Audith\Providers\Nexway\Data\Response\OrderApi\create $returnObject
+             * @var \Audith\Providers\Nexway\Data\Response\OrderApi\getDownloadInfo $returnObject
              */
             $this->assertEquals(0, $returnObject->responseCode);
         }
@@ -274,7 +321,7 @@ class NexwayTest extends PHPUnit_Framework_TestCase
             $returnObject  = $nexwayObject->run($requestStruct);
 
             /**
-             * @var \Audith\Providers\Nexway\Data\Response\OrderApi\create $returnObject
+             * @var \Audith\Providers\Nexway\Data\Response\OrderApi\updateDownloadTime $returnObject
              */
             $this->assertEquals(0, $returnObject->responseCode);
         }
@@ -307,7 +354,7 @@ class NexwayTest extends PHPUnit_Framework_TestCase
             $returnObject  = $nexwayObject->run($requestStruct);
 
             /**
-             * @var \Audith\Providers\Nexway\Data\Response\OrderApi\create $returnObject
+             * @var \Audith\Providers\Nexway\Data\Response\OrderApi\getData $returnObject
              */
             $this->assertEquals(0, $returnObject->responseCode);
             $this->assertNotNull($returnObject->orderNumber);
@@ -348,9 +395,27 @@ class NexwayTest extends PHPUnit_Framework_TestCase
             $returnObject  = $nexwayObject->run($requestStruct);
 
             /**
-             * @var \Audith\Providers\Nexway\Data\Response\OrderApi\create $returnObject
+             * @var \Audith\Providers\Nexway\Data\Response\OrderApi\cancel $returnObject
              */
             $this->assertEquals(0, $returnObject->responseCode);
         }
+    }
+
+
+    public function test_Provider_Nexway_Data_Request_CustomerApi_getOrderHistory()
+    {
+        $getOrderHistory            = new \Audith\Providers\Nexway\Data\Request\CustomerApi\getOrderHistory();
+        $getOrderHistory->partnerId = "sLCSv1milT";
+
+        $requestStruct = new \Audith\Providers\Nexway\Data\Request($getOrderHistory);
+        $nexwayObject  = new \Audith\Providers\Nexway();
+        $returnObject  = $nexwayObject->run($requestStruct);
+
+        /**
+         * @var \Audith\Providers\Nexway\Data\Response\CustomerApi\getOrderHistory $returnObject
+         */
+        $this->assertEquals(0, $returnObject->responseCode);
+
+        return $returnObject;
     }
 }
