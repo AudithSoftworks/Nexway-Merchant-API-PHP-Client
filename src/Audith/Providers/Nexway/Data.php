@@ -11,19 +11,25 @@ abstract class Data
         'getCategoriesSubCategoryResponseType'         => array('nameSpace' => '\Audith\Providers\Nexway\Data\Response\CatalogApi\getCategories\subcategory'),
         'getOperatingSystemsOsResponseType'            => array('nameSpace' => '\Audith\Providers\Nexway\Data\Response\CatalogApi\getOperatingSystems'),
         'getStockStatusproductStatusResponseType'      => array('nameSpace' => '\Audith\Providers\Nexway\Data\Response\OrderApi\getStockStatus\productStatus'),
+        'createResponseType'                           => array('nameSpace' => '\Audith\Providers\Nexway\Data\Response\OrderApi\create'),
         'createOrderLineResponseType'                  => array('nameSpace' => '\Audith\Providers\Nexway\Data\Response\OrderApi\create\orderLines'),
         'createLineItemResponseType'                   => array('nameSpace' => '\Audith\Providers\Nexway\Data\Response\OrderApi\create\orderLines\lineItems'),
         'createSerialResponseType'                     => array('nameSpace' => '\Audith\Providers\Nexway\Data\Response\OrderApi\create\orderLines\lineItems\serials'),
         'createFileResponseType'                       => array('nameSpace' => '\Audith\Providers\Nexway\Data\Response\OrderApi\create\orderLines\files'),
         'createDownloadManagerResponseType'            => array('nameSpace' => '\Audith\Providers\Nexway\Data\Response\OrderApi\create\downloadManager'),
+        'getDataResponseType'                          => array('nameSpace' => '\Audith\Providers\Nexway\Data\Response\OrderApi\getData'),
         'getDataOrderLineResponseType'                 => array('nameSpace' => '\Audith\Providers\Nexway\Data\Response\OrderApi\getData\orderLines'),
         'getDataLineItemResponseType'                  => array('nameSpace' => '\Audith\Providers\Nexway\Data\Response\OrderApi\getData\orderLines\lineItems'),
         'getDataSerialResponseType'                    => array('nameSpace' => '\Audith\Providers\Nexway\Data\Response\OrderApi\getData\orderLines\lineItems\serials'),
         'getDataFileResponseType'                      => array('nameSpace' => '\Audith\Providers\Nexway\Data\Response\OrderApi\getData\orderLines\files'),
         'getDataDownloadManagerResponseType'           => array('nameSpace' => '\Audith\Providers\Nexway\Data\Response\OrderApi\getData\downloadManager'),
+        'getDownloadInfoResponseType'                  => array('nameSpace' => '\Audith\Providers\Nexway\Data\Response\OrderApi\getDownloadInfo'),
         'getDownloadInfoOrderLineDownloadResponseType' => array('nameSpace' => '\Audith\Providers\Nexway\Data\Response\OrderApi\getDownloadInfo\orderLines'),
         'getDownloadInfoFileDownloadResponseType'      => array('nameSpace' => '\Audith\Providers\Nexway\Data\Response\OrderApi\getDownloadInfo\orderLines\files'),
-        'calculateVATVatResponseType'                  => array('nameSpace' => '\Audith\Providers\Nexway\Data\Response\OrderApi\calculateVAT\vat')
+        'calculateVATResponseType'                     => array('nameSpace' => '\Audith\Providers\Nexway\Data\Response\OrderApi\calculateVAT'),
+        'calculateVATVatResponseType'                  => array('nameSpace' => '\Audith\Providers\Nexway\Data\Response\OrderApi\calculateVAT\vat'),
+        'getOrderHistoryResponseType'                  => array('nameSpace' => '\Audith\Providers\Nexway\Data\Response\CustomerApi\getOrderHistory'),
+        'getOrderHistoryOrderHistoryResponseType'      => array('nameSpace' => '\Audith\Providers\Nexway\Data\Response\CustomerApi\getOrderHistory\ordersHistory')
     );
 
 

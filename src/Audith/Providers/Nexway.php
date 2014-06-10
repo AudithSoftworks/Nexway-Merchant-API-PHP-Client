@@ -66,7 +66,7 @@ class Nexway
             $_exceptionClassNamespace = '\\Audith\\Providers\\Nexway\\Exception\\' . $_allExceptionMappings[$code];
             throw new $_exceptionClassNamespace($msg, $code);
         } else {
-            throw new \Exception("[API-Error] " . $msg, $code);
+            throw new \Exception("[API-Error] " . $code . ": " . $msg, $code);
         }
     }
 

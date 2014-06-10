@@ -1,8 +1,6 @@
 <?php
 namespace Audith\Providers\Nexway\Data\Response\OrderApi;
 
-use Audith\Providers\Nexway\Data\Request\OrderApi;
-
 /**
  * @author Shahriyar Imanov <shehi@imanov.me>
  */
