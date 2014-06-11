@@ -6,6 +6,15 @@ namespace Audith\Providers;
  */
 class Nexway
 {
+    private $config = array();
+
+
+    public function __construct($config)
+    {
+        $this->config = $config;
+    }
+
+
     /**
      * Wrapper to process Nexway API Methods (single-run version)
      *
@@ -55,7 +64,7 @@ class Nexway
 
     private function exceptionHandler($msg, $code, $responseObject)
     {
-        $_globalExceptionMappings = \Audith\Providers\Nexway\Exception::$exceptionCodeMapping;
+        $_globalExceptionMappings = Nexway\Exception::$exceptionCodeMapping;
 
         $_responseObjectNamespace = '\\' . get_class($responseObject);
         $_localExceptionMappings  = $_responseObjectNamespace::$exceptionCodeMapping;
@@ -78,20 +87,18 @@ class Nexway
      */
     private function sendRequest(Nexway\Data\Request $data)
     {
-        $_config = \Audith\Providers\Nexway\Data::getConfig("Nexway");
-
         $_wsdlHttpBinding = "";
         $_wsdlServiceName = "";
-        if ($data->request instanceof \Audith\Providers\Nexway\Data\Request\CatalogApi) {
+        if ($data->request instanceof Nexway\Data\Request\CatalogApi) {
             $_wsdlServiceName = "CatalogApi";
-        } elseif ($data->request instanceof \Audith\Providers\Nexway\Data\Request\OrderApi) {
+        } elseif ($data->request instanceof Nexway\Data\Request\OrderApi) {
             $_wsdlServiceName = "OrderApi";
-        } elseif ($data->request instanceof \Audith\Providers\Nexway\Data\Request\CustomerApi) {
+        } elseif ($data->request instanceof Nexway\Data\Request\CustomerApi) {
             $_wsdlServiceName = "CustomerApi";
         }
 
-        if (isset($_config['service']['nexway']['url'][lcfirst($_wsdlServiceName)])) {
-            $_wsdlHttpBinding = $_config['service']['nexway']['url'][lcfirst($_wsdlServiceName)];
+        if (isset($this->config['service']['nexway']['url'][lcfirst($_wsdlServiceName)])) {
+            $_wsdlHttpBinding = $this->config['service']['nexway']['url'][lcfirst($_wsdlServiceName)];
         }
 
         $client = new \Zend\Soap\Client();

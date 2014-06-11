@@ -37,34 +37,6 @@ abstract class Data
 
 
     /**
-     * Returns contents of config.ini file for working environment
-     *
-     * @param  string $providerName
-     *
-     * @return array
-     * @throws \Audith\Providers\Nexway\Exception\ConfigFileNotReadableException
-     */
-    public static function getConfig($providerName)
-    {
-        $_environment = "development";
-
-        if (isset($_ENV['APPLICATION_ENV']) and !empty($_ENV['APPLICATION_ENV'])) {
-            $_environment = $_ENV['APPLICATION_ENV'];
-        }
-
-        $_zendConfigReader   = new \Zend\Config\Reader\Ini();
-        $_configFileLocation = dirname(dirname(__FILE__)) . "/" . ucfirst($providerName) . "/config.ini";
-        try {
-            $_configInformationFromIniFile = $_zendConfigReader->fromFile($_configFileLocation);
-        } catch (\Zend\Config\Exception\RuntimeException $e) {
-            throw new \Audith\Providers\Nexway\Exception\ConfigFileNotReadableException("Error reading INI file at location " . $_configFileLocation);
-        }
-
-        return $_configInformationFromIniFile[$_environment];
-    }
-
-
-    /**
      * Maps PHP-DOMNode to Provider Response Object
      *
      * @param mixed $sourceResponsePackage

@@ -1,18 +1,16 @@
 <?php
 namespace Audith\Providers\Nexway\Data;
 
-use \Audith\Providers\Nexway\Data;
-
 /**
  * @author    Shahriyar Imanov <shehi@imanov.me>
  */
 class Request extends \Audith\Providers\Nexway\Data
 {
-    const SALES_TERRITORY_EU = "EU";
+    const SALES_TERRITORY_EU = "eu";
 
-    const SALES_TERRITORY_UK = "UK";
+    const SALES_TERRITORY_UK = "uk";
 
-    const SALES_TERRITORY_US = "US";
+    const SALES_TERRITORY_US = "us";
 
     /**
      * @var string
@@ -20,7 +18,7 @@ class Request extends \Audith\Providers\Nexway\Data
     public $secret;
 
     /**
-     * @var Data
+     * @var \Audith\Providers\Nexway\Data
      */
     public $request;
 
@@ -28,11 +26,8 @@ class Request extends \Audith\Providers\Nexway\Data
     /**
      * Creates Request struct for any operation
      */
-    public function __construct(Data $data, $salesTerritory = self::SALES_TERRITORY_EU)
+    public function __construct(\Audith\Providers\Nexway\Data $data)
     {
-        $config = \Audith\Providers\Nexway\Data::getConfig("Nexway");
-
-        $this->secret  = $config['service']['nexway']['secret'][strtolower($salesTerritory)];
         $this->request = $data;
 
         return $this;

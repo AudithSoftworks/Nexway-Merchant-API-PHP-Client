@@ -8,8 +8,8 @@ namespace Audith\Providers\Nexway;
 class Exception extends \Exception
 {
     public static $exceptionCodeMapping = array(
-        70   => "SecretIsMissingException",
-        71   => "SecretNotValidException"
+        70 => "SecretIsMissingException",
+        71 => "SecretNotValidException"
     );
 
 

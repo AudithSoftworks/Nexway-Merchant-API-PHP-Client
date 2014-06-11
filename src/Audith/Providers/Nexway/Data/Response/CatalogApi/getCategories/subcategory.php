@@ -11,7 +11,6 @@ class subcategory extends \Audith\Providers\Nexway\Data
      */
     public $id;
 
-
     /**
      * @var string
      */

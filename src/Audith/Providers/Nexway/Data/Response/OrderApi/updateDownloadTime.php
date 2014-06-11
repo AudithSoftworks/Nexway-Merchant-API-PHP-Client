@@ -30,11 +30,6 @@ class updateDownloadTime extends \Audith\Providers\Nexway\Data\Response\OrderApi
     public $newDownloadEndDate;
 
     /**
-     * @var getDownloadInfo\orderLines[]
-     */
-    public $orderLines = array();
-
-    /**
      * @var integer
      */
     public $responseCode;
