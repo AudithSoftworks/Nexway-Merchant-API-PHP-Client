@@ -3,7 +3,7 @@
 require_once dirname(dirname(__FILE__)) . "/vendor/autoload.php";
 
 
-class NexwayXeTest extends PHPUnit_Framework_TestCase
+class NexwayUKTest extends PHPUnit_Framework_TestCase
 {
     protected static $config;
 
@@ -26,7 +26,7 @@ class NexwayXeTest extends PHPUnit_Framework_TestCase
     }
 
 
-    public function test_Provider_Data_getConfig_forNexway()
+    public function test_Provider_Data_getConfig()
     {
         $_environment = "development";
 
@@ -55,7 +55,7 @@ class NexwayXeTest extends PHPUnit_Framework_TestCase
         $getCategoriesRequest->productDescriptionLanguage = "EN"; // Not required
 
         $requestStruct         = new \Audith\Providers\Nexway\Data\Request($getCategoriesRequest);
-        $requestStruct->secret = self::$config['service']['nexway']['secret'][Audith\Providers\Nexway\Data\Request::SALES_TERRITORY_EU];
+        $requestStruct->secret = self::$config['service']['nexway']['secret'][Audith\Providers\Nexway\Data\Request::SALES_TERRITORY_UK];
 
         $nexwayObject = new \Audith\Providers\Nexway(self::$config);
         $returnObject = $nexwayObject->run($requestStruct);
@@ -76,7 +76,7 @@ class NexwayXeTest extends PHPUnit_Framework_TestCase
         $getOperatingSystems = new \Audith\Providers\Nexway\Data\Request\CatalogApi\getOperatingSystems();
 
         $requestStruct         = new \Audith\Providers\Nexway\Data\Request($getOperatingSystems);
-        $requestStruct->secret = self::$config['service']['nexway']['secret'][Audith\Providers\Nexway\Data\Request::SALES_TERRITORY_EU];
+        $requestStruct->secret = self::$config['service']['nexway']['secret'][Audith\Providers\Nexway\Data\Request::SALES_TERRITORY_UK];
 
         $nexwayObject = new \Audith\Providers\Nexway(self::$config);
         $returnObject = $nexwayObject->run($requestStruct);
@@ -95,9 +95,9 @@ class NexwayXeTest extends PHPUnit_Framework_TestCase
     public function data_Provider_Nexway_Data_Request_OrderApi_getStockStatus()
     {
         return array(
-            array(array(4626, 4649)),
-            array(array(4127)),
-            array(array(412721212121))
+            array(array(733551, 733558)),
+            array(array(733568)),
+            array(array(-1))
         );
     }
 
@@ -111,7 +111,7 @@ class NexwayXeTest extends PHPUnit_Framework_TestCase
         $getStockStatus->productRef = $data;
 
         $requestStruct         = new \Audith\Providers\Nexway\Data\Request($getStockStatus);
-        $requestStruct->secret = self::$config['service']['nexway']['secret'][Audith\Providers\Nexway\Data\Request::SALES_TERRITORY_EU];
+        $requestStruct->secret = self::$config['service']['nexway']['secret'][Audith\Providers\Nexway\Data\Request::SALES_TERRITORY_UK];
 
         $nexwayObject = new \Audith\Providers\Nexway(self::$config);
         $returnObject = $nexwayObject->run($requestStruct);
@@ -153,7 +153,7 @@ class NexwayXeTest extends PHPUnit_Framework_TestCase
             }
 
             $requestStruct         = new \Audith\Providers\Nexway\Data\Request($getCrossUpSell);
-            $requestStruct->secret = self::$config['service']['nexway']['secret'][Audith\Providers\Nexway\Data\Request::SALES_TERRITORY_EU];
+            $requestStruct->secret = self::$config['service']['nexway']['secret'][Audith\Providers\Nexway\Data\Request::SALES_TERRITORY_UK];
 
             $nexwayObject = new \Audith\Providers\Nexway(self::$config);
             $returnObject = $nexwayObject->run($requestStruct);
@@ -180,7 +180,7 @@ class NexwayXeTest extends PHPUnit_Framework_TestCase
             // Valid productRef
             array(
                 array(
-                    array('vatRate' => 0, 'amountTotal' => null, 'productRef' => 4626, 'amountDutyFree' => null, 'quantity' => 3)
+                    array('vatRate' => 0, 'amountTotal' => null, 'productRef' => 733551, 'amountDutyFree' => null, 'quantity' => 3)
                 ),
                 $_exceptionExpected = false
             ),
@@ -194,7 +194,7 @@ class NexwayXeTest extends PHPUnit_Framework_TestCase
             // Second one has invalid productRef
             array(
                 array(
-                    array('vatRate' => 8, 'amountTotal' => null, 'productRef' => 4758, 'amountDutyFree' => null, 'quantity' => 2),
+                    array('vatRate' => 8, 'amountTotal' => null, 'productRef' => 733558, 'amountDutyFree' => null, 'quantity' => 2),
                     array('vatRate' => 18, 'amountTotal' => null, 'productRef' => -1, 'amountDutyFree' => null, 'quantity' => 1)
                 ),
                 $_exceptionExpected = true
@@ -202,8 +202,8 @@ class NexwayXeTest extends PHPUnit_Framework_TestCase
             // All valid productRefs
             array(
                 array(
-                    array('vatRate' => 8, 'amountTotal' => null, 'productRef' => 4127, 'amountDutyFree' => null, 'quantity' => 2),
-                    array('vatRate' => 18, 'amountTotal' => null, 'productRef' => 4653, 'amountDutyFree' => null, 'quantity' => 1),
+                    array('vatRate' => 8, 'amountTotal' => null, 'productRef' => 733568, 'amountDutyFree' => null, 'quantity' => 2),
+                    array('vatRate' => 18, 'amountTotal' => null, 'productRef' => 733681, 'amountDutyFree' => null, 'quantity' => 1),
 
                 ),
                 $_exceptionExpected = false
@@ -244,7 +244,7 @@ class NexwayXeTest extends PHPUnit_Framework_TestCase
 
         # Simple members
         $_customer->email    = 'jdoe@mail.com';
-        $_customer->language = "en_XE";
+        $_customer->language = "en_GB";
 
         # "locationInvoice" and its members
         $_customer->locationInvoice              = new \Audith\Providers\Nexway\Data\Request\OrderApi\create\createLocationType();
@@ -275,7 +275,7 @@ class NexwayXeTest extends PHPUnit_Framework_TestCase
         }
 
         $requestStruct         = new \Audith\Providers\Nexway\Data\Request($create);
-        $requestStruct->secret = self::$config['service']['nexway']['secret'][Audith\Providers\Nexway\Data\Request::SALES_TERRITORY_EU];
+        $requestStruct->secret = self::$config['service']['nexway']['secret'][Audith\Providers\Nexway\Data\Request::SALES_TERRITORY_UK];
 
         $nexwayObject = new \Audith\Providers\Nexway(self::$config);
         $returnObject = $nexwayObject->run($requestStruct);
@@ -321,7 +321,7 @@ class NexwayXeTest extends PHPUnit_Framework_TestCase
             $getDownloadInfo->partnerOrderNumber = $_order->partnerOrderNumber;
 
             $requestStruct         = new \Audith\Providers\Nexway\Data\Request($getDownloadInfo);
-            $requestStruct->secret = self::$config['service']['nexway']['secret'][Audith\Providers\Nexway\Data\Request::SALES_TERRITORY_EU];
+            $requestStruct->secret = self::$config['service']['nexway']['secret'][Audith\Providers\Nexway\Data\Request::SALES_TERRITORY_UK];
 
             $nexwayObject = new \Audith\Providers\Nexway(self::$config);
             $returnObject = $nexwayObject->run($requestStruct);
@@ -359,7 +359,7 @@ class NexwayXeTest extends PHPUnit_Framework_TestCase
             $updateDownloadTime->value              = 'P7D';
 
             $requestStruct         = new \Audith\Providers\Nexway\Data\Request($updateDownloadTime);
-            $requestStruct->secret = self::$config['service']['nexway']['secret'][Audith\Providers\Nexway\Data\Request::SALES_TERRITORY_EU];
+            $requestStruct->secret = self::$config['service']['nexway']['secret'][Audith\Providers\Nexway\Data\Request::SALES_TERRITORY_UK];
 
             $nexwayObject = new \Audith\Providers\Nexway(self::$config);
             $returnObject = $nexwayObject->run($requestStruct);
@@ -396,7 +396,7 @@ class NexwayXeTest extends PHPUnit_Framework_TestCase
             $getData->partnerOrderNumber = $_order->partnerOrderNumber;
 
             $requestStruct         = new \Audith\Providers\Nexway\Data\Request($getData);
-            $requestStruct->secret = self::$config['service']['nexway']['secret'][Audith\Providers\Nexway\Data\Request::SALES_TERRITORY_EU];
+            $requestStruct->secret = self::$config['service']['nexway']['secret'][Audith\Providers\Nexway\Data\Request::SALES_TERRITORY_UK];
 
             $nexwayObject = new \Audith\Providers\Nexway(self::$config);
             $returnObject = $nexwayObject->run($requestStruct);
@@ -439,7 +439,7 @@ class NexwayXeTest extends PHPUnit_Framework_TestCase
             $cancel->reasonCode         = \Audith\Providers\Nexway\Data\Request\OrderApi\cancel::REASONCODE__ORDER_CANCELLED;
 
             $requestStruct         = new \Audith\Providers\Nexway\Data\Request($cancel);
-            $requestStruct->secret = self::$config['service']['nexway']['secret'][Audith\Providers\Nexway\Data\Request::SALES_TERRITORY_EU];
+            $requestStruct->secret = self::$config['service']['nexway']['secret'][Audith\Providers\Nexway\Data\Request::SALES_TERRITORY_UK];
 
             $nexwayObject = new \Audith\Providers\Nexway(self::$config);
             $returnObject = $nexwayObject->run($requestStruct);
@@ -463,7 +463,7 @@ class NexwayXeTest extends PHPUnit_Framework_TestCase
         $getOrderHistory->partnerId = "sLCSv1milT";
 
         $requestStruct         = new \Audith\Providers\Nexway\Data\Request($getOrderHistory);
-        $requestStruct->secret = self::$config['service']['nexway']['secret'][Audith\Providers\Nexway\Data\Request::SALES_TERRITORY_EU];
+        $requestStruct->secret = self::$config['service']['nexway']['secret'][Audith\Providers\Nexway\Data\Request::SALES_TERRITORY_UK];
 
         $nexwayObject = new \Audith\Providers\Nexway(self::$config);
         $returnObject = $nexwayObject->run($requestStruct);
