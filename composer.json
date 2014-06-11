@@ -1,12 +1,16 @@
 {
 	"name": "audith/providers-nexway",
+	"type": "library",
+	"homepage": "https://audith.atlassian.net/browse/NEXWAY",
 	"description": "Audith Softworks/Nexway API Integration",
-	"keywords": ["audith", "ztorm", "extensis", "nexway"],
+	"keywords": ["audith", "nexway", "product", "provider", "web-services", "wsdl", "soap"],
 	"license": "proprietary",
 	"authors": [
 		{
 			"name": "Shahriyar Imanov",
-			"email": "shehi@imanov.me"
+			"email": "shehi@imanov.me",
+			"homepage": "http://imanov.me",
+			"role": "Developer"
 		}
 	],
 	"autoload": {
@@ -27,5 +31,5 @@
 	"config": {
 		"preferred-install": "dist"
 	},
-	"minimum-stability": "dev"
+	"minimum-stability": "stable"
 }
