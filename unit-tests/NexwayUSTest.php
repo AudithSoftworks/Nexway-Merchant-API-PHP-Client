@@ -243,8 +243,9 @@ class NexwayUSTest extends PHPUnit_Framework_TestCase
         $_customer = new \Audith\Providers\Nexway\Data\Request\OrderApi\create\createCustomerType();
 
         # Simple members
-        $_customer->email    = 'jdoe@mail.com';
-        $_customer->language = "en_US";
+        $_customer->email     = 'jdoe@mail.com';
+        $_customer->language  = "en_US";
+        $_customer->partnerId = 'customer-1';
 
         # "locationInvoice" and its members
         $_customer->locationInvoice              = new \Audith\Providers\Nexway\Data\Request\OrderApi\create\createLocationType();
@@ -457,13 +458,30 @@ class NexwayUSTest extends PHPUnit_Framework_TestCase
     }
 
 
-    public function test_Provider_Nexway_Data_Request_CustomerApi_getOrderHistory()
+    public function data_Provider_Nexway_Data_Request_CustomerApi_getOrderHistory()
     {
+        return array(
+            array(array('partnerId' => "customer-1", '_amIFake' => false)),
+            array(array('partnerId' => "customer-2", '_amIFake' => true)),
+            array(array('partnerId' => "jdoe@mail.com", '_amIFake' => true))
+        );
+    }
+
+
+    /**
+     * @dataProvider data_Provider_Nexway_Data_Request_CustomerApi_getOrderHistory
+     */
+    public function test_Provider_Nexway_Data_Request_CustomerApi_getOrderHistory($data)
+    {
+        if ($data['_amIFake'] === true) {
+            $this->setExpectedException('Audith\\Providers\\Nexway\\Exception\\PartnerNotFoundException');
+        }
+
         $getOrderHistory            = new \Audith\Providers\Nexway\Data\Request\CustomerApi\getOrderHistory();
-        $getOrderHistory->partnerId = "sLCSv1milT";
+        $getOrderHistory->partnerId = $data['partnerId'];
 
         $requestStruct         = new \Audith\Providers\Nexway\Data\Request($getOrderHistory);
-        $requestStruct->secret = self::$config['service']['nexway']['secret'][Audith\Providers\Nexway\Data\Request::SALES_TERRITORY_US];
+        $requestStruct->secret = self::$config['service']['nexway']['secret'][Audith\Providers\Nexway\Data\Request::SALES_TERRITORY_EU];
 
         $nexwayObject = new \Audith\Providers\Nexway(self::$config);
         $returnObject = $nexwayObject->run($requestStruct);
@@ -472,6 +490,9 @@ class NexwayUSTest extends PHPUnit_Framework_TestCase
          * @var \Audith\Providers\Nexway\Data\Response\CustomerApi\getOrderHistory $returnObject
          */
         $this->assertEquals(0, $returnObject->responseCode);
+        $this->assertNotNull($returnObject->ordersHistory);
+        $this->assertNotEmpty($returnObject->ordersHistory);
+        $this->assertEquals('Audith\Providers\Nexway\Data\Response', get_class($returnObject));
 
         return $returnObject;
     }
