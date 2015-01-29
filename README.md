@@ -1,4 +1,5 @@
 [![Code Climate](https://codeclimate.com/github/AudithSoftworks/Nexway-API-PHP-Client/badges/gpa.svg)](https://codeclimate.com/github/AudithSoftworks/Nexway-API-PHP-Client)
+[![Test Coverage](https://codeclimate.com/github/AudithSoftworks/Nexway-API-PHP-Client/badges/coverage.svg)](https://codeclimate.com/github/AudithSoftworks/Nexway-API-PHP-Client)
 
 # Nexway API implementation in PHP (by Shahriyar Imanov at Audith Softworks) #
 
