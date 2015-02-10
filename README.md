@@ -1,5 +1,9 @@
 [![Code Climate](https://codeclimate.com/github/AudithSoftworks/Nexway-API-PHP-Client/badges/gpa.svg)](https://codeclimate.com/github/AudithSoftworks/Nexway-API-PHP-Client)
 [![Test Coverage](https://codeclimate.com/github/AudithSoftworks/Nexway-API-PHP-Client/badges/coverage.svg)](https://codeclimate.com/github/AudithSoftworks/Nexway-API-PHP-Client)
+[![Latest Stable Version](https://poser.pugx.org/audithsoftworks/nexway-merchant-api-php-client/v/stable.svg)](https://packagist.org/packages/audithsoftworks/nexway-merchant-api-php-client)
+[![Total Downloads](https://poser.pugx.org/audithsoftworks/nexway-merchant-api-php-client/downloads.svg)](https://packagist.org/packages/audithsoftworks/nexway-merchant-api-php-client)
+[![Latest Unstable Version](https://poser.pugx.org/audithsoftworks/nexway-merchant-api-php-client/v/unstable.svg)](https://packagist.org/packages/audithsoftworks/nexway-merchant-api-php-client) 
+[![License](https://poser.pugx.org/audithsoftworks/nexway-merchant-api-php-client/license.svg)](https://packagist.org/packages/audithsoftworks/nexway-merchant-api-php-client)
 
 # Nexway API implementation in PHP (by Shahriyar Imanov at Audith Softworks) #
 
