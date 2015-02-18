@@ -7,8 +7,4 @@ namespace Audith\Providers\Nexway\Exception;
 
 class DiscountForeignRefIsNotValidException extends \Audith\Providers\Nexway\Exception
 {
-    public function __construct($msg = "", $code = null)
-    {
-        parent::__construct($msg, $code);
-    }
 }

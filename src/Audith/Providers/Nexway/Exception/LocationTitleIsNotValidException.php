@@ -7,8 +7,4 @@ namespace Audith\Providers\Nexway\Exception;
 
 class LocationTitleIsNotValidException extends \Audith\Providers\Nexway\Exception
 {
-    public function __construct($msg = "", $code = null)
-    {
-        parent::__construct($msg, $code);
-    }
 }

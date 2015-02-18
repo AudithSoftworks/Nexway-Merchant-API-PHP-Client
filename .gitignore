@@ -1,6 +1,7 @@
 .*
 !.gitignore
 !.gitkeep
+!.scrutinizer.yml
 _ide_helper.php
 composer.lock
 vendor

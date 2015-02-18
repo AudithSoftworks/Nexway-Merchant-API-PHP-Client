@@ -11,10 +11,4 @@ class Exception extends \Exception
         70 => "SecretIsMissingException",
         71 => "SecretNotValidException"
     );
-
-
-    public function __construct($msg, $code = null)
-    {
-        parent::__construct($msg, $code);
-    }
 }

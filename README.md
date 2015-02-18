@@ -1,8 +1,8 @@
-[![Code Climate](https://codeclimate.com/github/AudithSoftworks/Nexway-API-PHP-Client/badges/gpa.svg)](https://codeclimate.com/github/AudithSoftworks/Nexway-API-PHP-Client)
-[![Test Coverage](https://codeclimate.com/github/AudithSoftworks/Nexway-API-PHP-Client/badges/coverage.svg)](https://codeclimate.com/github/AudithSoftworks/Nexway-API-PHP-Client)
+[![Code Climate](https://codeclimate.com/github/AudithSoftworks/Nexway-Merchant-API-PHP-Client/badges/gpa.svg)](https://codeclimate.com/github/AudithSoftworks/Nexway-Merchant-API-PHP-Client)
+[![Code Quality](https://scrutinizer-ci.com/g/AudithSoftworks/Nexway-Merchant-API-PHP-Client/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/AudithSoftworks/Nexway-Merchant-API-PHP-Client)
 [![Latest Stable Version](https://poser.pugx.org/audithsoftworks/nexway-merchant-api-php-client/v/stable.svg)](https://packagist.org/packages/audithsoftworks/nexway-merchant-api-php-client)
 [![Total Downloads](https://poser.pugx.org/audithsoftworks/nexway-merchant-api-php-client/downloads.svg)](https://packagist.org/packages/audithsoftworks/nexway-merchant-api-php-client)
-[![Latest Unstable Version](https://poser.pugx.org/audithsoftworks/nexway-merchant-api-php-client/v/unstable.svg)](https://packagist.org/packages/audithsoftworks/nexway-merchant-api-php-client) 
+[![Latest Unstable Version](https://poser.pugx.org/audithsoftworks/nexway-merchant-api-php-client/v/unstable.svg)](https://packagist.org/packages/audithsoftworks/nexway-merchant-api-php-client)
 [![License](https://poser.pugx.org/audithsoftworks/nexway-merchant-api-php-client/license.svg)](https://packagist.org/packages/audithsoftworks/nexway-merchant-api-php-client)
 
 # Nexway API implementation in PHP (by Shahriyar Imanov at Audith Softworks) #
@@ -14,14 +14,14 @@ This library implements Nexway's WSDL/SOAP powered API interface, using PHP's OO
 
 * Before being able to use this library, you need working Test configuration access token to [Nexway](http://www.nexway.com) WebServices interface. For production environment, you will need the Live configuration token as well.
 * Once Nexway's access tokens have been acquired, enter them in ```/src/Audith/Providers/Nexway/config.ini``` file, in appropriate sections.
-* Check out Unit-tests in ```/unit-tests``` folder for use-cases.
+* Check out Unit-tests in ```/tests``` folder for use-cases.
 
 
 ## How to run Unit-tests? ##
 
 Composer configuration file includes ```phpunit/phpunit``` package for development purposes. Once ```composer install``` has been executed, PHPUnit library files will be fetched.
 
-Run following command to execute unit-tests: ```./vendor/phpunit/phpunit/phpunit --verbose --colors --strict --debug unit-tests/```
+Run following command to execute unit-tests: ```./vendor/phpunit/phpunit/phpunit --verbose --colors --strict --debug tests/```
 
 
 ## How to build Documentation using PHPDocumentor? ##
